@@ -27,13 +27,20 @@ namespace ASP_NET_Video_Games_API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetGamesByPublisher(int id)
+        public IActionResult GetGamesByID(int id)
         {
             
                 var videoGames = _context.VideoGames.Where(vg => vg.Id == id);
                 return Ok(videoGames);
             
         }
-        
-     }
+
+        [HttpGet]
+        public IActionResult GetGames()
+        {
+            var videoGames = _context.VideoGames;
+            return Ok(videoGames);
+        }
+
+    }
 }
