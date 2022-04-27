@@ -43,7 +43,24 @@ namespace ASP_NET_Video_Games_API.Controllers
 
             return Ok(nameofgame);
         }
-       
+        [HttpGet("Platform/")]
+        
+        public IActionResult GetSalesByPlatform()
+        {
+            
+            var consoles = _context.VideoGames.Select(c => c.Platform).Distinct();
+            
+            Dictionary<string, double> returnValue = new();
+            foreach (string Platform in consoles.ToList())
+            {
+                var salesbyPlatform = _context.VideoGames.Where(i => i.Platform == Platform).Where(vg => vg.Year > 2013).Where(vg => vg.GlobalSales > 0).Select(i => i.GlobalSales).Sum();
+                if (salesbyPlatform > 0)
+                {
+                    returnValue.Add(Platform, salesbyPlatform);
+                }
+            }
+            return Ok(returnValue);
+        }
 
     }
 }
