@@ -1,6 +1,8 @@
 ﻿using ASP_NET_Video_Games_API.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ASP_NET_Video_Games_API.Models;
+using System.Collections.Generic;
 
 namespace ASP_NET_Video_Games_API.Controllers
 {
@@ -34,13 +36,14 @@ namespace ASP_NET_Video_Games_API.Controllers
             return Ok(videoGames);
 
         }
+        [HttpGet("Name/{Name}")]
+        public IActionResult GetGames(string Name)
+        {
+            var nameofgame = _context.VideoGames.Where(g => g.Name.Contains(Name));
 
-        //[HttpGet("{name}")]
-        //public IActionResult GetGames(string name)
-        //{
-        //    var videoGames = _context.VideoGames.Where(vg => vg.Name == name);
-        //    return Ok(videoGames);
-        //}
+            return Ok(nameofgame);
+        }
+       
 
     }
 }
