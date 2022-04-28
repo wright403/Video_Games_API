@@ -1,8 +1,7 @@
 ﻿using ASP_NET_Video_Games_API.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ASP_NET_Video_Games_API.Models;
-using System.Collections.Generic;
+
 
 namespace ASP_NET_Video_Games_API.Controllers
 {
@@ -19,14 +18,14 @@ namespace ASP_NET_Video_Games_API.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        //[HttpGet]
 
-        public IActionResult GetPublishers()
-        {
-            var videoGamePublishers = _context.VideoGames.Select(vg => vg.Publisher).Distinct();
+        //public IActionResult GetPublishers()
+        //{
+        //    var videoGamePublishers = _context.VideoGames.Select(vg => vg.Publisher).Distinct();
 
-            return Ok(videoGamePublishers);
-        }
+        //    return Ok(videoGamePublishers);
+        //}
 
         [HttpGet("{id}")]
         public IActionResult GetGamesByID(int id)
@@ -60,6 +59,13 @@ namespace ASP_NET_Video_Games_API.Controllers
                 }
             }
             return Ok(returnValue);
+        }
+        [HttpGet]
+        public IActionResult GetAllGames()
+        {
+            var videoGames = _context.VideoGames;
+
+            return Ok(videoGames);
         }
 
     }
