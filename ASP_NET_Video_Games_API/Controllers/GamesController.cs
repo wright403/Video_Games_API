@@ -18,7 +18,7 @@ namespace ASP_NET_Video_Games_API.Controllers
             _context = context;
         }
 
-        //[HttpGet]
+        //[HttpGet("Publisher/{Publisher}")]
 
         //public IActionResult GetPublishers()
         //{
@@ -67,6 +67,19 @@ namespace ASP_NET_Video_Games_API.Controllers
 
             return Ok(videoGames);
         }
+        [HttpGet("ActionGamesByYear")]
+        public IActionResult GetActionGamesByYear()
+        {
+            var years = _context.VideoGames.Where(c => c.Year > 1995).Select(c => c.Year).Distinct();
 
+            Dictionary<int, double> returnValue = new();
+            foreach (int year in years.ToList())
+            {
+
+                var AllSales = _context.VideoGames.Where(s => s.Genre == "Action").Where(s => s.Year == year).Select(s => s.GlobalSales).Sum();
+                returnValue.Add(year, AllSales);
+            }
+            return Ok(returnValue);
+        }
     }
 }
